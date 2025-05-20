@@ -1,0 +1,15 @@
+# Ignore all files in the data directory
+./data/*
+# Ignore log files
+*.log
+# Ignore temporary files
+*.tmp
+sr/__pycache__/*
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/*
+# Ignore Python bytecode files
+__pycache__
+# Ignore virtual environment directories
+venv/   
+*.wav
+*.zip

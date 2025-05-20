@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.optimizers import Adam
-
+import tqdm
 from . import config
 from . import data_loader
 from . import feature_extractor
