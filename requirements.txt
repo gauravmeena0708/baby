@@ -1,0 +1,10 @@
+numpy
+pandas
+matplotlib
+seaborn
+librosa
+tensorflow
+scikit-learn
+imblearn
+tqdm
+ipython # For display() if running parts in notebook-like env
