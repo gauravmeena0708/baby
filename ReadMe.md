@@ -42,3 +42,7 @@ You can run specific experiments by executing the corresponding `main_*.py` scri
 **Example 1: Run Deep Learning experiment with SMOTE (Conv1D-LSTM with 50 MFCC features):**
 ```bash
 python -m src.main_dl_smote
+```
+```bash
+python -m src.main_uber_cry_classifier
+```
