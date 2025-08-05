@@ -1,3 +1,4 @@
+pyyaml
 numpy
 pandas
 matplotlib
@@ -7,4 +8,6 @@ tensorflow
 scikit-learn
 imblearn
 tqdm
-ipython # For display() if running parts in notebook-like env
+ipython
+pytest
+scipy

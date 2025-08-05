@@ -1,0 +1,57 @@
+# Configuration for the Baby Cry Classification project
+
+# Project settings
+project:
+  name: "BabyCryClassification"
+  seed: 42
+  base_dir: "." # Base directory of the project
+
+# Data settings
+data:
+  # Path to the raw data. For testing, we can use the dummy data.
+  # For a full run, this should be changed to the actual data directory.
+  data_path: "tests/dummy_data"
+  class_names: ["hungry", "pain"] # Update with all class names for a full run
+
+  # Parameters for the data loader and feature extractor
+  audio:
+    sample_rate: 22050
+    n_mels: 128
+    n_fft: 2048
+    hop_length: 512
+
+  # Splitting
+  validation_split: 0.2 # Proportion of data to use for validation
+
+# Model settings
+model:
+  name: "SimpleCNN"
+  params:
+    # input_shape will be inferred from data config
+    num_classes: 2 # Should match the number of class_names
+    learning_rate: 0.001
+
+# Training settings
+training:
+  epochs: 10 # A smaller number for quick test runs
+  batch_size: 2
+
+  # Early stopping
+  early_stopping:
+    patience: 5
+    monitor: "val_loss"
+
+  # Checkpointing
+  checkpoint:
+    monitor: "val_loss"
+    save_best_only: True
+
+# Output settings
+outputs:
+  # Directory to save all outputs (logs, models, etc.)
+  output_dir: "outputs"
+
+  # Subdirectories for different artifacts
+  checkpoint_dir: "checkpoints"
+  log_dir: "logs"
+  saved_model_dir: "models"

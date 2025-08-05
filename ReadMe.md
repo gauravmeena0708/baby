@@ -1,48 +1,81 @@
-# Baby Cry Classification
+# Baby Cry Classification (Refactored)
 
-This project aims to classify baby cry sounds into different categories (e.g., hungry, pain, discomfort) using audio features and machine learning/deep learning models.
+This project is a refactored version of a baby cry classification system, built with a strong emphasis on modern Machine Learning Engineering best practices and a strict Test-Driven Development (TDD) methodology. The goal is to provide a robust, maintainable, and reproducible system for classifying baby cry audio.
 
 ## Project Structure
 
-- `data/`: (Optional) For storing raw audio data if not using Kaggle/mounted paths.
-- `notebooks/`: Contains the original Jupyter Notebook for reference.
-- `src/`: Contains the Python source code.
-  - `config.py`: Configuration parameters (paths, model hyperparameters, etc.).
-  - `data_loader.py`: Scripts for loading and initial processing of audio data.
-  - `feature_extractor.py`: Scripts for feature extraction and augmentation.
-  - `models.py`: Definitions for Keras (Deep Learning) and Scikit-learn (Machine Learning) models.
-  - `train_utils.py`: Utility functions for training models, including data splitting, scaling, and SMOTE.
-  - `evaluate_utils.py`: Scripts for evaluating model performance and generating plots.
-  - `main_dl_smote.py`: Example main script to run the Deep Learning (Conv1D-LSTM) experiment with SMOTE.
-  - `main_ml_augmented.py`: Example main script to run a Machine Learning (Random Forest) experiment with augmented data.
-- `requirements.txt`: Lists the Python dependencies for this project.
-- `README.md`: This file.
+The project is organized into a modular structure that separates concerns and promotes reusability:
+
+- `configs/`: Contains configuration files. All experiment parameters are managed via `config.yaml`.
+- `data/`: Contains the raw audio data (not checked into Git). A dummy dataset for testing is available in `tests/dummy_data`.
+- `outputs/`: Default directory for all artifacts generated during runs, including checkpoints, logs, and saved models.
+- `src/`: Contains all the source code, organized into logical modules:
+  - `data/`: Data loading, feature extraction, and augmentation.
+  - `engine/`: Training and evaluation logic.
+  - `models/`: Model definitions.
+  - `utils/`: Utility functions, such as the configuration loader.
+- `tests/`: Contains all unit and integration tests, following the TDD methodology.
+- `run_*.py`: Executable scripts for running different pipelines.
 
 ## Setup
 
-1.  **Clone the repository (if applicable).**
+1.  **Clone the repository:**
+    ```bash
+    git clone <repository_url>
+    cd <repository_name>
+    ```
+
 2.  **Set up a Python environment:**
-    It's recommended to use a virtual environment (e.g., venv, conda).
+    It's highly recommended to use a virtual environment.
     ```bash
     python -m venv venv
     source venv/bin/activate  # On Windows: venv\Scripts\activate
     ```
+
 3.  **Install dependencies:**
+    The project uses a `setup.py` file to manage dependencies. Install the project in editable mode:
     ```bash
-    pip install -r requirements.txt
+    pip install -e .
     ```
+
 4.  **Data:**
-    -   Ensure your audio data is accessible. The `src/config.py` file attempts to use a Kaggle input path first (`/kaggle/input/baby-crying-sounds-datasets/Baby Crying Sounds/`).
-    -   If running locally, modify `LOCAL_DATA_PATH` in `src/config.py` to point to your "Baby Crying Sounds" directory, or place the data in `./data/Baby Crying Sounds/` relative to the project root. The directory should have subdirectories for each class (e.g., "belly pain", "hungry").
+    - The project is configured to run with the dummy data in `tests/dummy_data`.
+    - To run with the full dataset, download the data and update the `data_path` in `configs/config.yaml` to point to your data directory. The directory should have subdirectories for each class (e.g., "hungry", "pain").
 
-## Running Experiments
+## Running the Pipeline
 
-You can run specific experiments by executing the corresponding `main_*.py` scripts from the project root directory.
+The main entry points for the pipeline are the `run_*.py` scripts.
 
-**Example 1: Run Deep Learning experiment with SMOTE (Conv1D-LSTM with 50 MFCC features):**
+### Training
+
+To run the training pipeline, use the `run_training.py` script. All training parameters can be configured in `configs/config.yaml`.
+
 ```bash
-python -m src.main_dl_smote
+python run_training.py
 ```
+This will train the model, save checkpoints, and save the final trained model to the `outputs` directory.
+
+### Evaluation
+
+To evaluate a trained model, use the `run_evaluation.py` script. This will load the final model from the `outputs/models` directory and evaluate it on the dataset specified in the configuration.
+
 ```bash
-python -m src.main_uber_cry_classifier
+python run_evaluation.py
+```
+
+### Hyperparameter Search
+
+To run a hyperparameter search, use the `run_hyperparameter_search.py` script. The search space is defined within the script itself.
+
+```bash
+python run_hyperparameter_search.py
+```
+
+## Test-Driven Development (TDD)
+
+This project was refactored using a strict TDD workflow. For each component (e.g., data loader, model, trainer), a comprehensive suite of tests was written *before* the implementation. This ensures that every part of the system is robust, verifiable, and functions as expected.
+
+To run all tests, use `pytest`:
+```bash
+python -m pytest
 ```
